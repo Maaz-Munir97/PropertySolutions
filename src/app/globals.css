@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------
-   Design tokens — "Coastal Ivory" palette
-   Warm ivory canvas, deep midnight ink, champagne-gold accent,
-   muted eucalyptus as a secondary tone.
-------------------------------------------------------------------- */
 @theme {
   --color-ivory: #f6f2eb;
   --color-sand: #ebe3d5;
@@ -61,7 +56,6 @@
   }
 }
 
-/* Lenis smooth scroll */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -73,7 +67,6 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Subtle film grain for depth on dark sections */
 .grain::after {
   content: "";
   position: absolute;

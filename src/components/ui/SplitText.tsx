@@ -1,18 +1,23 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion } from "motion/react";
 import clsx from "clsx";
+import { easeLuxe } from "@/lib/motion";
 
 type SplitTextProps = {
   text: string;
   className?: string;
   delay?: number;
-  /** Words (by index) to render in the accent style. */
   accent?: number[];
   as?: "h1" | "h2" | "p";
 };
 
-/** Reveals a heading word by word, each word sliding up from behind a mask. */
+const wordVariants = {
+  hidden: { y: "110%" },
+  show: { y: "0%", transition: { duration: 1, ease: easeLuxe } },
+};
+
 export default function SplitText({ text, className, delay = 0, accent = [], as = "h1" }: SplitTextProps) {
   const Tag = motion[as];
   const words = text.split(" ");
@@ -27,18 +32,17 @@ export default function SplitText({ text, className, delay = 0, accent = [], as 
       aria-label={text}
     >
       {words.map((word, i) => (
-        <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.12em] align-top">
-          <motion.span
-            className={clsx("inline-block", accent.includes(i) && "italic text-gold")}
-            variants={{
-              hidden: { y: "110%" },
-              show: { y: "0%", transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
-            }}
-          >
-            {word}
-            {i < words.length - 1 && " "}
-          </motion.span>
-        </span>
+        <Fragment key={`${word}-${i}`}>
+          <span aria-hidden className="inline-block overflow-hidden pb-[0.12em] align-top">
+            <motion.span
+              className={clsx("inline-block", accent.includes(i) && "text-gold italic")}
+              variants={wordVariants}
+            >
+              {word}
+            </motion.span>
+          </span>
+          {i < words.length - 1 && " "}
+        </Fragment>
       ))}
     </Tag>
   );

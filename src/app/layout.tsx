@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
-import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import { site } from "@/lib/content";
+import { site } from "@/data/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -20,12 +20,18 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: `${site.name} — Brisbane Property Management`,
+    default: `${site.name} — Property Management`,
     template: `%s · ${site.name}`,
   },
-  description:
-    "Professional, down-to-earth property management, asset oversight and investment advisory across Brisbane.",
+  description: site.description,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: site.name,
+    description: site.description,
+  },
 };
 
 export const viewport: Viewport = {

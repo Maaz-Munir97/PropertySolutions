@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import ContactDetails from "@/components/contact/ContactDetails";
+import ContactForm from "@/components/contact/ContactForm";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
-import ContactForm from "@/components/contact/ContactForm";
-import { images, site } from "@/lib/content";
+import { images } from "@/data/media";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Book a free rental appraisal or ask a question about your Brisbane property.",
+  description: "Book a free rental appraisal or ask a question about your property.",
 };
-
-const details = [
-  { icon: Phone, label: "Call us", value: site.phone, href: site.phoneHref },
-  { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
-  { icon: MapPin, label: "Office", value: site.address },
-  { icon: Clock, label: "Hours", value: site.hours },
-];
 
 export default function ContactPage() {
   return (
@@ -37,41 +30,7 @@ export default function ContactPage() {
                 We&apos;d love to <em className="text-gold">hear from you.</em>
               </h2>
             </Reveal>
-
-            <ul className="mt-12 space-y-4">
-              {details.map(({ icon: Icon, label, value, href }, i) => (
-                <Reveal
-                  as="li"
-                  key={label}
-                  delay={i * 0.08}
-                  className="flex items-center gap-5 rounded-2xl border border-ink/10 p-5 transition-colors duration-500 hover:border-gold/50 hover:bg-linen"
-                >
-                    <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-midnight text-gold-soft">
-                      <Icon className="size-5" aria-hidden />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-xs font-semibold tracking-[0.16em] text-stone uppercase">{label}</span>
-                      {href ? (
-                        <a href={href} className="mt-1 block break-words font-medium transition-colors hover:text-gold">
-                          {value}
-                        </a>
-                      ) : (
-                        <span className="mt-1 block font-medium">{value}</span>
-                      )}
-                    </span>
-                </Reveal>
-              ))}
-            </ul>
-
-            <Reveal delay={0.2} className="mt-8 overflow-hidden rounded-2xl border border-ink/10">
-              <iframe
-                title="Map of Brisbane City"
-                src="https://www.google.com/maps?q=Brisbane+City+QLD+4000&output=embed"
-                className="h-64 w-full grayscale-[60%]"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </Reveal>
+            <ContactDetails />
           </div>
 
           <Reveal delay={0.1}>

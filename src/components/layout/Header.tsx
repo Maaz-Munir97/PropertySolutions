@@ -6,8 +6,16 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Phone } from "lucide-react";
-import { nav, site } from "@/lib/content";
+import { site } from "@/data/site";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
+import { easeLuxe } from "@/lib/motion";
+import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
+import MenuToggle from "./MenuToggle";
+import MobileMenu from "./MobileMenu";
+
+const SCROLLED_OFFSET = 40;
+const HIDE_AFTER = 400;
 
 export default function Header() {
   const pathname = usePathname();
@@ -17,24 +25,22 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setScrolled(latest > 40);
-    setHidden(latest > prev && latest > 400 && !open);
+    const previous = scrollY.getPrevious() ?? 0;
+    setScrolled(latest > SCROLLED_OFFSET);
+    setHidden(latest > previous && latest > HIDE_AFTER && !open);
   });
 
   useEffect(() => setOpen(false), [pathname]);
+  useLockBodyScroll(open);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-  }, [open]);
-
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   const solid = scrolled || open;
 
   return (
     <>
       <motion.header
         animate={{ y: hidden ? "-100%" : "0%" }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.5, ease: easeLuxe }}
         className={clsx(
           "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
           solid ? "bg-midnight/85 backdrop-blur-xl" : "bg-transparent",
@@ -47,31 +53,7 @@ export default function Header() {
           )}
         >
           <Logo />
-
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
-            {nav.map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={clsx(
-                    "relative rounded-full px-4 py-2 text-sm transition-colors duration-300",
-                    active ? "text-linen" : "text-linen/60 hover:text-linen",
-                  )}
-                >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-linen/10"
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+          <DesktopNav isActive={isActive} />
 
           <div className="flex items-center gap-3">
             <a
@@ -87,75 +69,12 @@ export default function Header() {
             >
               Free appraisal
             </Link>
-
-            <button
-              type="button"
-              onClick={() => setOpen((o) => !o)}
-              className="relative flex size-11 items-center justify-center rounded-full border border-linen/20 lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-            >
-              <span
-                className={clsx(
-                  "absolute h-px w-5 bg-linen transition-transform duration-500 ease-luxe",
-                  open ? "rotate-45" : "-translate-y-1",
-                )}
-              />
-              <span
-                className={clsx(
-                  "absolute h-px w-5 bg-linen transition-transform duration-500 ease-luxe",
-                  open ? "-rotate-45" : "translate-y-1",
-                )}
-              />
-            </button>
+            <MenuToggle open={open} onToggle={() => setOpen((o) => !o)} />
           </div>
         </div>
       </motion.header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ clipPath: "inset(0 0 100% 0)" }}
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-40 flex flex-col bg-midnight pt-28 lg:hidden"
-          >
-            <nav className="container-x flex flex-1 flex-col gap-2" aria-label="Mobile">
-              {nav.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25 + i * 0.06, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Link
-                    href={item.href}
-                    className={clsx(
-                      "display flex items-baseline gap-4 border-b border-linen/10 py-4 text-4xl",
-                      pathname === item.href ? "text-gold-soft" : "text-linen",
-                    )}
-                  >
-                    <span className="font-sans text-xs text-linen/40">0{i + 1}</span>
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="container-x space-y-1 pb-10 text-sm text-linen/60"
-            >
-              <a href={site.phoneHref} className="block text-lg text-linen">
-                {site.phone}
-              </a>
-              <p>{site.address}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{open && <MobileMenu isActive={isActive} />}</AnimatePresence>
     </>
   );
 }

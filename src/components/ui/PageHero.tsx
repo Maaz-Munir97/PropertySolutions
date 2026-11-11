@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import { easeLuxe } from "@/lib/motion";
 import SplitText from "./SplitText";
 
 type PageHeroProps = {
@@ -13,14 +14,16 @@ type PageHeroProps = {
   image: string;
 };
 
-/** Shared hero banner for inner pages, with a parallax background image. */
 export default function PageHero({ eyebrow, title, accent, text, image }: PageHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
 
   return (
-    <section ref={ref} className="grain relative flex min-h-[72svh] items-end overflow-hidden bg-midnight pb-16 pt-40 sm:pb-24">
+    <section
+      ref={ref}
+      className="grain relative flex min-h-[72svh] items-end overflow-hidden bg-midnight pt-40 pb-16 sm:pb-24"
+    >
       <motion.div style={{ y }} className="absolute inset-0">
         <Image src={image} alt="" fill priority sizes="100vw" className="object-cover opacity-45" />
       </motion.div>
@@ -30,7 +33,7 @@ export default function PageHero({ eyebrow, title, accent, text, image }: PageHe
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: easeLuxe }}
           className="eyebrow text-gold-soft"
         >
           {eyebrow}
@@ -44,7 +47,7 @@ export default function PageHero({ eyebrow, title, accent, text, image }: PageHe
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, delay: 0.6, ease: easeLuxe }}
           className="mt-8 max-w-xl text-lg leading-relaxed text-linen/70"
         >
           {text}

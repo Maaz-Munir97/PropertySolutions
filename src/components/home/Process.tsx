@@ -2,9 +2,9 @@
 
 import { motion, useScroll } from "motion/react";
 import { useRef } from "react";
-import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
-import { process } from "@/lib/content";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { process } from "@/data/company";
 
 export default function Process() {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,12 +24,8 @@ export default function Process() {
         />
 
         <div ref={ref} className="relative mt-16 lg:mt-24">
-          {/* animated progress line */}
-          <div className="absolute left-5 top-0 h-full w-px bg-ink/10 lg:left-0 lg:top-5 lg:h-px lg:w-full">
-            <motion.div
-              style={{ scaleY: scrollYProgress }}
-              className="h-full w-full origin-top bg-gold lg:hidden"
-            />
+          <div className="absolute top-0 left-5 h-full w-px bg-ink/10 lg:top-5 lg:left-0 lg:h-px lg:w-full">
+            <motion.div style={{ scaleY: scrollYProgress }} className="h-full w-full origin-top bg-gold lg:hidden" />
             <motion.div
               style={{ scaleX: scrollYProgress }}
               className="hidden h-full w-full origin-left bg-gold lg:block"
@@ -38,12 +34,12 @@ export default function Process() {
 
           <ol className="grid gap-12 lg:grid-cols-4 lg:gap-8">
             {process.map((item, i) => (
-              <Reveal as="li" key={item.step} delay={i * 0.1} className="relative pl-16 lg:pl-0 lg:pt-16">
-                  <span className="absolute left-0 top-0 flex size-10 items-center justify-center rounded-full border border-gold bg-ivory text-xs font-semibold text-gold">
-                    {item.step}
-                  </span>
-                  <h3 className="display text-2xl sm:text-3xl">{item.title}</h3>
-                  <p className="mt-3 max-w-xs leading-relaxed text-stone">{item.text}</p>
+              <Reveal as="li" key={item.step} delay={i * 0.1} className="relative pl-16 lg:pt-16 lg:pl-0">
+                <span className="absolute top-0 left-0 flex size-10 items-center justify-center rounded-full border border-gold bg-ivory text-xs font-semibold text-gold">
+                  {item.step}
+                </span>
+                <h3 className="display text-2xl sm:text-3xl">{item.title}</h3>
+                <p className="mt-3 max-w-xs leading-relaxed text-stone">{item.text}</p>
               </Reveal>
             ))}
           </ol>

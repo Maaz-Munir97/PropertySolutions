@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { images } from "@/data/media";
+import { site } from "@/data/site";
 import Button from "./Button";
 import Reveal from "./Reveal";
-import { images, site } from "@/lib/content";
 
 export default function CtaBanner({ title = "Curious what your property could earn?" }: { title?: string }) {
   return (
@@ -14,7 +15,7 @@ export default function CtaBanner({ title = "Curious what your property could ea
               <span className="eyebrow text-gold-soft">Free, no-obligation</span>
               <h2 className="display mt-5 max-w-2xl text-4xl leading-[1.08] sm:text-5xl">{title}</h2>
               <p className="mt-5 max-w-lg text-linen/65">
-                Get an honest rental appraisal from a local Brisbane manager — a straight answer, not a sales pitch.
+                Get an honest rental appraisal from a local manager — a straight answer, not a sales pitch.
               </p>
             </div>
             <div className="flex flex-wrap gap-4">

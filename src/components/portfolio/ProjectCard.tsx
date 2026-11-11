@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Bath, BedDouble } from "lucide-react";
 import clsx from "clsx";
-import type { Project } from "@/lib/content";
+import type { Project } from "@/types/content";
 
 type ProjectCardProps = {
   project: Project;
@@ -11,7 +11,12 @@ type ProjectCardProps = {
   tall?: boolean;
 };
 
-export default function ProjectCard({ project, className, sizes = "(min-width: 1024px) 33vw, 100vw", tall }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  className,
+  sizes = "(min-width: 1024px) 33vw, 100vw",
+  tall,
+}: ProjectCardProps) {
   return (
     <Link href={`/portfolio/${project.slug}`} className={clsx("group block", className)}>
       <div className={clsx("relative overflow-hidden rounded-3xl bg-sand", tall ? "aspect-[3/4]" : "aspect-[4/3]")}>
@@ -24,10 +29,10 @@ export default function ProjectCard({ project, className, sizes = "(min-width: 1
         />
         <div className="absolute inset-0 bg-gradient-to-t from-midnight/70 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
 
-        <span className="absolute left-5 top-5 rounded-full bg-linen/90 px-3 py-1 text-xs font-semibold text-ink backdrop-blur">
+        <span className="absolute top-5 left-5 rounded-full bg-linen/90 px-3 py-1 text-xs font-semibold text-ink backdrop-blur">
           {project.category}
         </span>
-        <span className="absolute right-5 top-5 flex size-11 scale-75 items-center justify-center rounded-full bg-gold text-linen opacity-0 transition-all duration-500 ease-luxe group-hover:scale-100 group-hover:opacity-100">
+        <span className="absolute top-5 right-5 flex size-11 scale-75 items-center justify-center rounded-full bg-gold text-linen opacity-0 transition-all duration-500 ease-luxe group-hover:scale-100 group-hover:opacity-100">
           <ArrowUpRight className="size-5" aria-hidden />
         </span>
 

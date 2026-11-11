@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { nav, services, site } from "@/lib/content";
+import { services } from "@/data/services";
+import { nav, site } from "@/data/site";
+import FooterColumn from "./FooterColumn";
 import Logo from "./Logo";
+
+const linkClass = "transition-colors hover:text-gold-soft";
 
 export default function Footer() {
   return (
@@ -30,62 +34,55 @@ export default function Footer() {
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-linen/55">{site.tagline}</p>
           </div>
 
-          <div>
-            <h3 className="text-xs font-semibold tracking-[0.2em] text-linen/40 uppercase">Explore</h3>
-            <ul className="mt-5 space-y-3 text-sm">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-linen/75 transition-colors hover:text-gold-soft">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-xs font-semibold tracking-[0.2em] text-linen/40 uppercase">Services</h3>
-            <ul className="mt-5 space-y-3 text-sm">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/services#${s.slug}`} className="text-linen/75 transition-colors hover:text-gold-soft">
-                    {s.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-xs font-semibold tracking-[0.2em] text-linen/40 uppercase">Visit</h3>
-            <ul className="mt-5 space-y-3 text-sm text-linen/75">
-              <li>
-                <a href={site.phoneHref} className="transition-colors hover:text-gold-soft">
-                  {site.phone}
-                </a>
+          <FooterColumn title="Explore">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className={linkClass}>
+                  {item.label}
+                </Link>
               </li>
-              <li>
-                <a href={`mailto:${site.email}`} className="break-all transition-colors hover:text-gold-soft">
-                  {site.email}
-                </a>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Services">
+            {services.map((service) => (
+              <li key={service.slug}>
+                <Link href={`/services#${service.slug}`} className={linkClass}>
+                  {service.title}
+                </Link>
               </li>
-              <li>{site.address}</li>
-              <li>{site.hours}</li>
-            </ul>
-          </div>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Visit">
+            <li>
+              <a href={site.phoneHref} className={linkClass}>
+                {site.phone}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${site.email}`} className={`${linkClass} break-all`}>
+                {site.email}
+              </a>
+            </li>
+            <li>{site.address}</li>
+            <li>{site.hours}</li>
+          </FooterColumn>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-linen/10 py-8 text-xs text-linen/40 sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-          <p>Demo site — built as a preview</p>
+          <p>
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
+          </p>
+          <p>Concept website · fictional company created for portfolio purposes</p>
         </div>
       </div>
 
       <p
         aria-hidden
-        className="display pointer-events-none -mb-[0.22em] select-none whitespace-nowrap text-center text-[19vw] leading-none text-linen/[0.04]"
+        className="display pointer-events-none -mb-[0.22em] text-center text-[19vw] leading-none whitespace-nowrap text-linen/[0.04] select-none"
       >
-        Brisbane
+        Click&amp;Get
       </p>
     </footer>
   );

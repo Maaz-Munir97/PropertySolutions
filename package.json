@@ -1,11 +1,12 @@
 {
-  "name": "property-solutions-qld",
+  "name": "click-and-get-solution",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",

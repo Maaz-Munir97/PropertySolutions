@@ -1,0 +1,142 @@
+import type { Project, ProjectCategory } from "@/types/content";
+import { unsplash } from "./media";
+
+export const projects: Project[] = [
+  {
+    slug: "new-farm-riverside-residence",
+    title: "Riverside Residence",
+    suburb: "New Farm",
+    category: "Luxury",
+    image: unsplash("1613490493576-7fde63acd811"),
+    gallery: [unsplash("1600607687939-ce8a6c25118c"), unsplash("1600566753190-17f0baa2a6c3")],
+    result: "Leased in 9 days",
+    beds: 5,
+    baths: 4,
+    summary: "A five-bedroom riverfront home repositioned for the executive rental market.",
+    challenge:
+      "The home had sat vacant for two months under a previous agency with pricing that didn't reflect its riverfront position.",
+    approach: [
+      "Re-priced against recent New Farm executive leases",
+      "Professional styling and twilight photography",
+      "Targeted relocation-agent outreach",
+    ],
+    outcomes: [
+      { label: "Days to lease", value: "9" },
+      { label: "Rent increase", value: "+14%" },
+      { label: "Lease term", value: "24 mo" },
+    ],
+  },
+  {
+    slug: "west-end-urban-apartment",
+    title: "Urban Apartment",
+    suburb: "West End",
+    category: "Apartment",
+    image: unsplash("1502672260266-1c1ef2d93688"),
+    gallery: [unsplash("1560448204-e02f11c3d0e2"), unsplash("1600210492486-724fe5c67fb0")],
+    result: "+11% yield",
+    beds: 2,
+    baths: 2,
+    summary: "A two-bedroom investor apartment brought back to full performance.",
+    challenge: "High tenant turnover and deferred maintenance were eroding the owner's returns.",
+    approach: ["Minor refresh of kitchen and flooring", "Tighter tenant screening criteria", "Planned maintenance calendar"],
+    outcomes: [
+      { label: "Yield uplift", value: "+11%" },
+      { label: "Vacancy", value: "0 days" },
+      { label: "Tenancy", value: "3 yrs+" },
+    ],
+  },
+  {
+    slug: "paddington-queenslander",
+    title: "Restored Queenslander",
+    suburb: "Paddington",
+    category: "Residential",
+    image: unsplash("1568605114967-8130f3a36994"),
+    gallery: [unsplash("1600047509807-ba8f99d2cdde"), unsplash("1600566753190-17f0baa2a6c3")],
+    result: "Fully compliant in 30 days",
+    beds: 4,
+    baths: 2,
+    summary: "A character home managed through restoration and a smooth first lease.",
+    challenge: "Heritage considerations and a staged renovation meant careful trade coordination.",
+    approach: [
+      "Coordinated licensed heritage trades",
+      "Staged compliance and safety checks",
+      "Launched to market the week works finished",
+    ],
+    outcomes: [
+      { label: "Compliance", value: "30 days" },
+      { label: "Applications", value: "27" },
+      { label: "Rent vs. est.", value: "+8%" },
+    ],
+  },
+  {
+    slug: "cbd-commercial-suite",
+    title: "Commercial Suite",
+    suburb: "Brisbane CBD",
+    category: "Commercial",
+    image: unsplash("1497366216548-37526070297c"),
+    gallery: [unsplash("1486406146926-c627a92ad1ab"), unsplash("1449844908441-8829872d2607")],
+    result: "5-year lease secured",
+    summary: "A mid-floor office suite re-tenanted with a long-term professional tenant.",
+    challenge: "Post-lease-expiry vacancy in a competitive CBD office market.",
+    approach: [
+      "Flexible fit-out incentive structure",
+      "Direct outreach to local professional firms",
+      "Detailed outgoings reporting for the owner",
+    ],
+    outcomes: [
+      { label: "Lease term", value: "5 yrs" },
+      { label: "Vacancy", value: "6 wks" },
+      { label: "Incentive", value: "Below mkt" },
+    ],
+  },
+  {
+    slug: "ascot-family-home",
+    title: "Family Home",
+    suburb: "Ascot",
+    category: "Residential",
+    image: unsplash("1570129477492-45c003edd2be"),
+    gallery: [unsplash("1600607687939-ce8a6c25118c"), unsplash("1600210492486-724fe5c67fb0")],
+    result: "Leased above appraisal",
+    beds: 4,
+    baths: 3,
+    summary: "A leafy family home placed with long-term tenants near top schools.",
+    challenge: "The owner was relocating overseas and needed hands-off, reliable management.",
+    approach: [
+      "Remote-friendly monthly video reports",
+      "School-catchment focused marketing",
+      "Pre-approved maintenance budget",
+    ],
+    outcomes: [
+      { label: "Above appraisal", value: "+6%" },
+      { label: "Days to lease", value: "12" },
+      { label: "Owner visits", value: "0" },
+    ],
+  },
+  {
+    slug: "hamilton-modern-villa",
+    title: "Modern Villa",
+    suburb: "Hamilton",
+    category: "Luxury",
+    image: unsplash("1580587771525-78b9dba3b914"),
+    gallery: [unsplash("1600566753190-17f0baa2a6c3"), unsplash("1600047509807-ba8f99d2cdde")],
+    result: "Portfolio review: +2 assets",
+    beds: 4,
+    baths: 3,
+    summary: "An investor's flagship property and a wider portfolio strategy.",
+    challenge: "The owner wanted to grow their portfolio without over-extending.",
+    approach: [
+      "Full yield and equity review",
+      "Suburb shortlist backed by rental data",
+      "Managed both new acquisitions from settlement",
+    ],
+    outcomes: [
+      { label: "New assets", value: "2" },
+      { label: "Portfolio yield", value: "5.1%" },
+      { label: "Vacancy", value: "0 days" },
+    ],
+  },
+];
+
+export const projectCategories: ProjectCategory[] = Array.from(new Set(projects.map((p) => p.category)));
+
+export const findProjectIndex = (slug: string) => projects.findIndex((p) => p.slug === slug);
